@@ -7,6 +7,7 @@ reference/
 .env.*
 !.env.example
 !.env.full-example
+!.env.northflank
 config.json
 config.*.json
 !config.example.json
