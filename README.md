@@ -34,13 +34,17 @@
 
 ## 部署（二选一）
 
-### 方式 A：模板导入（推荐，一次到位）
+### 方式 A：模板运行（推荐，自动建好一切）
 
-1. 注册/登录 [Northflank](https://app.northflank.com)（Sandbox 档免费，创建项目需绑卡验证，只验证不扣费）
-2. Dashboard → **Create Project** → 选择 **Import** / **From template**，上传本仓库的 `northflank.json`
-3. 模板会自动创建：构建（Dockerfile）+ 服务（端口 3457，public）+ 部署
-4. 在服务页 **Configuration → Environment** 填入 [.env.northflank](.env.northflank) 中的变量（至少 `LISTEN_ADDR=:3457` + `AUTO_DISCOVER_TOKEN=false`）
-5. 等部署完成，拿到 `https://<project>-<service>.code.run` 的 HTTPS URL
+1. 注册/登录 [Northflank 控制台](https://app.northflank.com)（Sandbox 档免费，创建项目需绑卡验证，只验证不扣费）
+2. 团队仪表盘左侧导航 → **Templates**（模板）页面 → **+ New Template / Create template**
+3. 打开模板编辑器，切到 **Code** 视图，粘贴本仓库 `northflank.json` 的全部内容（编辑器带 schema 校验，`$schema` 已声明）
+4. 保存模板 → 打开该模板 → 点击 **Run**（运行）→ 等待工作流跑完
+   - 模板会自动创建：项目 `suibuff-northflank` + 构建服务（Dockerfile 构建）+ 部署服务（端口 3457，public HTTP，分配 `xxx.code.run` 域名）
+5. 进入项目 → 打开服务 → **Configuration → Environment**，填入 [.env.northflank](.env.northflank) 中的变量（至少 `LISTEN_ADDR=:3457` + `AUTO_DISCOVER_TOKEN=false`），保存后会自动重新部署
+6. 部署完成后用下方验证命令测试
+
+> 提示：也可以给模板启用 **GitOps**，让 Northflank 直接读取本仓库的 `northflank.json`（路径填 `/northflank.json`），以后 push 修改会自动同步。
 
 ### 方式 B：UI 手动配置
 
